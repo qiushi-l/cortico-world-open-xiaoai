@@ -1,6 +1,6 @@
 {
   "name": "cortico-world-open-xiaoai",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "把刷了 Open-XiaoAI 的小米音箱接进 Cortico：语音进来，回答念出去。附带桥接进程的开关与状态。/ Brings an Open-XiaoAI patched Xiaomi speaker into Cortico: voice in, spoken answers out.",
   "license": "MIT",
