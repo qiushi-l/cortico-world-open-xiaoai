@@ -40,18 +40,25 @@
 
 **前置条件**：音箱已刷 Open-XiaoAI 补丁固件 · 音箱已装 client 且 `server.txt` 指向本机 · 本机有 Python 3.9+ 和 Node 22+。
 
+### 从扩展市场装（推荐）
+
+Coopanion → 控制台 → 扩展市场 → 搜「小爱音箱」或 `cortico-world-open-xiaoai` → 安装 → 重启 Coopanion。
+
+### 或者手动装
+
 ```bash
-# 1. 把本仓库放进 Coopanion 的扩展目录
-<Coopanion>/data/extensions/node_modules/cortico-world-open-xiaoai/
+# 1. 在 Coopanion 的扩展目录里装包
+cd <Coopanion>/data/extensions
+pnpm add cortico-world-open-xiaoai
 
-# 2. 在 <Coopanion>/data/extensions/package.json 的 dependencies 里加一行
-"cortico-world-open-xiaoai": "0.1.0"
-
-# 3. 在 <Coopanion>/data/extensions/world-owners.json 里加一条
+# 2. 在 world-owners.json 里加一条（装的时候不会自动写）
 "open-xiaoai": "cortico-world-open-xiaoai"
 
-# 4. 重启 Coopanion，界面里就多了一个「小爱音箱」World
+# 3. 重启 Coopanion，界面里就多了一个「小爱音箱」World
 ```
+
+没有 pnpm 的话，把包解压到 `<Coopanion>/data/extensions/node_modules/cortico-world-open-xiaoai/`，
+再在 `extensions/package.json` 的 dependencies 里加一行 `"cortico-world-open-xiaoai": "0.1.0"` 也一样。
 
 **完整步骤见 [INSTALL.md](INSTALL.md)** —— 从刷固件、装 client，到配置、验收、排障，一步步写全了。
 
