@@ -1,0 +1,70 @@
+{
+  "_comment": "桥接的完整配置示例。World 只覆盖 server.port / voice.wake_words 等少数几项，其余原样带过去。实际运行时的配置落在 <部署目录>/open-xiaoai/bridge.json。",
+
+  "server": {
+    "host": "0.0.0.0",
+    "port": 4399
+  },
+
+  "llm": {
+    "base_url": "https://api.deepseek.com",
+    "model": "deepseek-chat",
+    "api_key": "",
+    "system_prompt": "你是住在这台小米小爱音箱里的语音助手。小爱同学负责放歌、定闹钟、开关家电这些硬件操作，你负责聊天、答疑和解释。回答要口语化、简短，一到两句（不超过 80 字），不要用 markdown、列表、括号注释或表情符号；用户是用说的，输出必须能直接朗读。你只能聊天，没法真的放歌、设闹钟或控制家电，遇到这类请求如实说做不到，并请用户直接对小爱同学说；绝对不要谎称某个动作已经完成。",
+    "max_history": 16,
+    "timeout_s": 40
+  },
+
+  "voice": {
+    "wake_words": ["小智", "小智同学", "管家"],
+
+    "interrupt_on_wake": true,
+    "interrupt_mode": "kill",
+    "duck_interval_ms": 200,
+    "duck_max_s": 60,
+    "duck_post_s": 4,
+    "max_kills_per_turn": 4,
+
+    "wake_window_s": 15,
+    "followup_s": 12,
+    "skip_phrase_prefix": true,
+
+    "reopen_after_speak": true,
+    "reopen_delay_ms": 150,
+
+    "xiaoai_keywords": [
+      "播放", "放一首", "放个", "放首", "放首歌", "首歌", "来一首", "来点音乐",
+      "下一首", "上一首", "暂停", "继续播放", "声音大", "声音小", "调大", "调小",
+      "音量", "静音", "闹钟", "提醒", "倒计时", "日程", "备忘",
+      "打电话", "发消息", "打开", "关闭", "空调", "窗帘", "灯"
+    ],
+    "stop_words": ["停", "停止", "别说了", "闭嘴", "退下", "不用了", "安静"]
+  },
+
+  "health": {
+    "asr_dead_rounds": 3,
+    "auto_reboot": false
+  },
+
+  "home_assistant": {
+    "_comment": "还没接。填上 base_url 和长期访问令牌后把 enabled 改成 true。",
+    "enabled": false,
+    "base_url": "",
+    "token": ""
+  },
+
+  "brain": {
+    "_comment": "deepseek = 直连 DeepSeek API；coopanion = 交给 Coopanion 里某个 World，带全套工具。",
+    "backend": "coopanion"
+  },
+
+  "coopanion": {
+    "host": "127.0.0.1",
+    "port": 17788,
+    "name": "音箱",
+    "owner": "",
+    "quiet_ms": 1200,
+    "reply_timeout_s": 120,
+    "fallback": true
+  }
+}

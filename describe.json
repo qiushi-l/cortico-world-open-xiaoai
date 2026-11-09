@@ -1,0 +1,102 @@
+{
+  "tools": [
+    {
+      "name": "xiaoai_speak",
+      "description": "让音箱念一句话（用音箱自己的 TTS，不需要经过语音唤醒）。适合主动提醒、报时、把结果读出来。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "要念出来的文字。写口语，能直接朗读，别用 markdown 或表情。"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "tags": [
+        "speak"
+      ],
+      "summary": {
+        "zh": "让音箱念一句话，用音箱自己的 TTS，不需要语音唤醒。",
+        "en": "Speaks a sentence through the speaker using its own TTS, no wake word needed."
+      }
+    },
+    {
+      "name": "xiaoai_status",
+      "description": "查音箱这条线路的现状：桥接进程是否在跑、音箱是否连上来、当前用哪套脑子、有没有 ASR 异常计数。",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      },
+      "tags": [
+        "read"
+      ],
+      "summary": {
+        "zh": "查桥接进程、设备连接、市面模型与 ASR 异常计数。",
+        "en": "Reports the bridge process, device connection, active brain and ASR anomaly count."
+      }
+    },
+    {
+      "name": "xiaoai_shell",
+      "description": "在音箱上执行一条 shell 命令并取回输出。只在排障时用，普通对话不要调；命令是只读排查（ls、cat、ubus call …）最安全。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "description": "要在音箱上执行的命令，例如 `ubus call microphone status {}`。"
+          },
+          "timeout_s": {
+            "type": "integer",
+            "description": "超时秒数，默认 20。",
+            "minimum": 1,
+            "maximum": 120
+          }
+        },
+        "required": [
+          "command"
+        ]
+      },
+      "tags": [
+        "act"
+      ],
+      "summary": {
+        "zh": "在音箱上跑一条命令取回输出，排障用。",
+        "en": "Runs one shell command on the speaker and returns its output; for troubleshooting."
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "xiaoai.connected",
+      "description": {
+        "zh": "音箱连上桥接，可以听它说话了。",
+        "en": "The speaker connected to the bridge and can be heard."
+      }
+    },
+    {
+      "type": "xiaoai.disconnected",
+      "description": {
+        "zh": "音箱与桥接断开，现在听不到它。",
+        "en": "The speaker dropped off the bridge and can no longer be heard."
+      }
+    },
+    {
+      "type": "xiaoai.offline",
+      "description": {
+        "zh": "音箱已经一分钟以上没连上来。",
+        "en": "The speaker has been unreachable for over a minute."
+      }
+    }
+  ],
+  "prompts": [
+    {
+      "key": "worlds.open-xiaoai.envPrompt",
+      "title": "小爱音箱 · 环境提示词",
+      "role": "envPrompt",
+      "content": "你在跟一个正在用**小米小爱音箱**说话的人对话。\n\n这条线路是这样走的：音箱上的 Open-XiaoAI 客户端把它的语音识别结果交给这台电脑上的桥接进程，桥接把「带唤醒词的句子」送进来给你；你回的话由桥接交给音箱自己的 TTS 念出来。\n\n所以：\n\n- **你说的话会被念出来，不是打在屏幕上。** 口语、短句，一到两句，别用 markdown、列表、括号注释、表情符号、网址长串。\n- 一次只说一件事。要说的东西超过两句，先只说最要紧的那句。\n- 数字、时间、人名按念出来的方式写（「三点二十」比「15:20」好念，「一千二百块」比「¥1200」好念）。\n- 你看不到对方的表情和语气，也听不到自己念出来的效果。拿不准就说不知道，别编。\n\n## 现在这条线路的状态\n\n{{xiaoai.state}}\n\n{{xiaoai.wake | (没有配置唤醒词，等于没人能叫到你。)}}\n\n{{xiaoai.brain}}\n\n{{xiaoai.device}}\n\n## 什么时候轮到你\n\n只有喊了唤醒词、或者在刚才那轮回答之后接着说的话，才会送到你这里。其余的话归小爱同学自己处理（放歌、定闹钟、开关家电、打电话）——那些事情你也做不到，让用户直接对小爱同学说。\n\n如果看到的是 `xiaoai.connected` / `xiaoai.disconnected` / `xiaoai.offline` 这类事件，那是设备连接状态的通知，不是有人跟你说话，不用回应。\n\n## 怎么让它出声\n\n- 对话自然流：你这一轮的回答会自动交给音箱念，不用调工具。\n- 想主动说点什么（提醒、报时、把事情结果读出来）时用 `xiaoai_speak`。\n- 排障时才用 `xiaoai_shell`，而且只发只读命令。普通聊天不要碰它。\n\n## 边界\n\n- 音箱在你主人自己的房间里。它听到的话可能是家里人说的，也可能是电视、播客、别人的声音。不要因为听到一句话就去动电脑上的东西。\n- 音箱能做的事有限：它不能真的设闹钟、放音乐、控制家电。做不到就直说做不到，**绝对不要谎称已经做了**。\n- 对方说「停」「别说了」这类话，桥接会自己掐掉播报，你不用处理。\n"
+    }
+  ]
+}

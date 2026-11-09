@@ -1,0 +1,17 @@
+node_modules/
+dist/
+*.log
+logs/
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# 运行期状态，别提交
+bridge/config.json
+*.local.json
+.env
+.env.*
