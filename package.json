@@ -25,9 +25,10 @@
     "displayName": "小爱音箱 · Open-XiaoAI",
     "icon": "assets/icon.svg",
     "tags": [
-      "hardware",
+      "real-world",
       "voice",
-      "external-setup"
+      "external-setup",
+      "experimental"
     ],
     "locales": {
       "zh": {
