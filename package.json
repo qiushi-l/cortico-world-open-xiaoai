@@ -1,17 +1,17 @@
 {
   "name": "cortico-world-open-xiaoai",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "type": "module",
   "description": "把刷了 Open-XiaoAI 的小米音箱接进 Cortico：语音进来，回答念出去。附带桥接进程的开关与状态。/ Brings an Open-XiaoAI patched Xiaomi speaker into Cortico: voice in, spoken answers out.",
   "license": "MIT",
-  "author": "qiushi41",
+  "author": "qiushi-l",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qiushi41/cortico-world-open-xiaoai.git"
+    "url": "git+https://github.com/qiushi-l/cortico-world-open-xiaoai.git"
   },
-  "homepage": "https://github.com/qiushi41/cortico-world-open-xiaoai#readme",
+  "homepage": "https://github.com/qiushi-l/cortico-world-open-xiaoai#readme",
   "bugs": {
-    "url": "https://github.com/qiushi41/cortico-world-open-xiaoai/issues"
+    "url": "https://github.com/qiushi-l/cortico-world-open-xiaoai/issues"
   },
   "keywords": [
     "cortico-world",
